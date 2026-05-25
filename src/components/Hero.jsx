@@ -1,5 +1,5 @@
 import { motion, useReducedMotion } from 'framer-motion'
-import { useEffect, useRef } from 'react'
+import { Fragment, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import Reveal from './Reveal'
 
@@ -91,19 +91,21 @@ export default function Hero() {
 
           <h1 className="hero__headline">
             {headlineWords.map((word, i) => (
-              <motion.span
-                key={i}
-                className="hero__word"
-                initial={reduceMotion ? false : { opacity: 0, y: 30, filter: 'blur(8px)' }}
-                animate={reduceMotion ? undefined : { opacity: 1, y: 0, filter: 'blur(0px)' }}
-                transition={reduceMotion ? undefined : {
-                  duration: 0.6,
-                  delay: 0.3 + i * 0.06,
-                  ease: [0.22, 1, 0.36, 1],
-                }}
-              >
-                {word}{' '}
-              </motion.span>
+              <Fragment key={word + i}>
+                <motion.span
+                  className="hero__word"
+                  initial={reduceMotion ? false : { opacity: 0, y: 30, filter: 'blur(8px)' }}
+                  animate={reduceMotion ? undefined : { opacity: 1, y: 0, filter: 'blur(0px)' }}
+                  transition={reduceMotion ? undefined : {
+                    duration: 0.6,
+                    delay: 0.3 + i * 0.06,
+                    ease: [0.22, 1, 0.36, 1],
+                  }}
+                >
+                  {word}
+                </motion.span>
+                {i < headlineWords.length - 1 ? ' ' : null}
+              </Fragment>
             ))}
           </h1>
 
