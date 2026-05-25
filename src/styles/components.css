@@ -648,6 +648,10 @@
   -webkit-text-fill-color: transparent;
 }
 
+.hero__word:not(:last-child) {
+  margin-right: 0.22em;
+}
+
 .hero__copy {
   max-width: 38rem;
   color: rgba(244, 248, 255, 0.75);
