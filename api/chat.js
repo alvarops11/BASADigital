@@ -65,20 +65,55 @@ export default async function handler(req, res) {
       body: JSON.stringify(payload),
     })
 
-    const data = await response.json()
+    const raw = await response.text()
+    let data = null
+
+    try {
+      data = raw ? JSON.parse(raw) : null
+    } catch {
+      data = null
+    }
+
     if (!response.ok) {
-      return res.status(response.status).json({
-        error: data?.error?.message || 'Error en OpenRouter.',
+      console.error('OpenRouter non-OK', {
+        status: response.status,
+        model,
+        body: raw?.slice(0, 400),
+      })
+      return res.status(response.status || 502).json({
+        error: data?.error?.message || `Error en OpenRouter (${response.status}).`,
       })
     }
 
-    const reply = data?.choices?.[0]?.message?.content?.trim()
+    const candidate = data?.choices?.[0]?.message?.content
+    const reply =
+      typeof candidate === 'string'
+        ? candidate.trim()
+        : Array.isArray(candidate)
+          ? candidate
+              .filter((part) => part?.type === 'text' && typeof part?.text === 'string')
+              .map((part) => part.text)
+              .join('\n')
+              .trim()
+          : ''
+
     if (!reply) {
-      return res.status(502).json({ error: 'OpenRouter no devolvio contenido.' })
+      console.error('OpenRouter empty reply', {
+        model,
+        body: raw?.slice(0, 400),
+      })
+      return res.status(502).json({
+        error: 'OpenRouter respondio sin texto util.',
+        meta: {
+          hasChoices: Boolean(data?.choices?.length),
+          finishReason: data?.choices?.[0]?.finish_reason || null,
+        },
+      })
     }
 
     return res.status(200).json({ reply })
   } catch {
+    console.error('OpenRouter request failed', { model })
     return res.status(502).json({ error: 'No se pudo conectar con OpenRouter.' })
   }
 }
