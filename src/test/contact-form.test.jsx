@@ -1,9 +1,14 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
+import { vi } from 'vitest'
 import ContactForm from '../components/ContactForm'
 
-test('muestra errores requeridos y confirma envio simulado', async () => {
+test('muestra errores requeridos y confirma envio correcto', async () => {
   const user = userEvent.setup()
+  const fetchSpy = vi.spyOn(globalThis, 'fetch').mockResolvedValue({
+    ok: true,
+    json: async () => ({ ok: true }),
+  })
 
   render(<ContactForm />)
 
@@ -27,4 +32,12 @@ test('muestra errores requeridos y confirma envio simulado', async () => {
   await user.click(screen.getByRole('button', { name: /enviar/i }))
 
   expect(await screen.findByText(/hemos recibido tu solicitud/i)).toBeInTheDocument()
+  expect(fetchSpy).toHaveBeenCalledWith(
+    '/api/contact',
+    expect.objectContaining({
+      method: 'POST',
+    })
+  )
+
+  fetchSpy.mockRestore()
 })

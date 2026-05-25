@@ -52,6 +52,7 @@ export default function ContactForm() {
   const [values, setValues] = useState(initialForm)
   const [errors, setErrors] = useState({})
   const [status, setStatus] = useState('idle')
+  const [serverError, setServerError] = useState('')
 
   useEffect(() => {
     if (status !== 'success') {
@@ -69,9 +70,10 @@ export default function ContactForm() {
     const { name, value } = event.target
     setValues((current) => ({ ...current, [name]: value }))
     setErrors((current) => ({ ...current, [name]: undefined }))
+    if (serverError) setServerError('')
   }
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault()
     const nextErrors = validate(values)
 
@@ -82,8 +84,29 @@ export default function ContactForm() {
     }
 
     setErrors({})
-    setStatus('success')
-    setValues(initialForm)
+    setStatus('sending')
+    setServerError('')
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(values),
+      })
+
+      const data = await response.json()
+      if (!response.ok) {
+        throw new Error(data?.error || 'No se pudo enviar el formulario.')
+      }
+
+      setStatus('success')
+      setValues(initialForm)
+    } catch (error) {
+      setStatus('error')
+      setServerError(error.message || 'Error al enviar el formulario.')
+    }
   }
 
   return (
@@ -136,17 +159,16 @@ export default function ContactForm() {
       </div>
 
       <div className="contact-form__footer">
-        <button className="button button--primary" type="submit">
-          Enviar solicitud
+        <button className="button button--primary" type="submit" disabled={status === 'sending'}>
+          {status === 'sending' ? 'Enviando...' : 'Enviar solicitud'}
         </button>
-        <p className="contact-form__note">
-          Formulario preparado para una integracion real. En esta version el envio es simulado.
-        </p>
+        <p className="contact-form__note">Te responderemos por correo o telefono tras revisar tu caso.</p>
       </div>
 
       {status === 'success' ? (
         <p className="contact-form__success">Hemos recibido tu solicitud y te responderemos pronto.</p>
       ) : null}
+      {serverError ? <p className="contact-form__error">{serverError}</p> : null}
     </form>
   )
 }

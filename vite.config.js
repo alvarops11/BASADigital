@@ -1,5 +1,7 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import { copyFile } from 'node:fs/promises'
+import { resolve } from 'node:path'
 
 const OPENROUTER_URL = 'https://openrouter.ai/api/v1/chat/completions'
 
@@ -121,7 +123,22 @@ const localApiPlugin = {
   },
 }
 
+const googleVerificationPlugin = {
+  name: 'google-verification-copy',
+  async writeBundle(options) {
+    const outDir = options?.dir || 'dist'
+    const source = resolve(process.cwd(), 'public', 'googleeeb28b243f7b9f3e.html')
+    const target = resolve(process.cwd(), outDir, 'googleeeb28b243f7b9f3e.html')
+
+    try {
+      await copyFile(source, target)
+    } catch {
+      // Ignore if file is not present in local env.
+    }
+  },
+}
+
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(), localApiPlugin],
+  plugins: [react(), localApiPlugin, googleVerificationPlugin],
 })

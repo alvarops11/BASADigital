@@ -1622,6 +1622,16 @@
   font-size: 0.88rem;
 }
 
+.contact-form__error {
+  margin: 0;
+  padding: 0.85rem 1rem;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 76, 96, 0.45);
+  background: rgba(255, 76, 96, 0.12);
+  color: #ffd1d7;
+  font-size: 0.88rem;
+}
+
 .contact-form input:focus,
 .contact-form select:focus,
 .contact-form textarea:focus {

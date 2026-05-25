@@ -57,6 +57,10 @@ Fecha: 2026-05-25
 - El asistente de chat ajusta su prompt comercial: resuelve dudas y deriva hacia Contacto o WhatsApp, evita respuestas de "no se puede" y define a BASA Digital como proyecto de digitalizacion de negocios.
 - Se cambia el modelo por defecto a una opcion `free` de OpenRouter (`meta-llama/llama-3.1-8b-instruct:free`), configurable por entorno.
 - Se añade middleware local en `vite.config.js` para exponer `/api/chat` durante `vite dev` y evitar `404` en desarrollo, manteniendo la API key en servidor.
+- El formulario de Contacto deja de ser simulado: ahora envia email real mediante `api/contact.js` (server-side) usando Resend.
+- Se elimina el texto de envio simulado y se anaden estados reales de `enviando`, `exito` y `error` de servidor en UI.
+- Se anaden variables de entorno para correo (`RESEND_API_KEY`, `CONTACT_FROM_EMAIL`, `CONTACT_TO_EMAIL`) en `.env.example`.
+- Se anade archivo de verificacion de Google Search Console en `public/googleeeb28b243f7b9f3e.html` para validar propiedad del dominio.
 - Legal se adapta a BASA Digital como marca/proyecto y deja placeholders sin inventar datos societarios.
 
 ## Decisiones tecnicas
