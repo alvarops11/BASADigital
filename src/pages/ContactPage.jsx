@@ -4,8 +4,9 @@ import Reveal from '../components/Reveal'
 
 const reasons = [
   'Detectar procesos manuales que se pueden automatizar.',
-  'Priorizar soluciones de IA, software o datos con impacto real.',
-  'Definir un primer sistema viable para mejorar gestion y productividad.',
+  'Aterrizar webs, cartas QR, reservas o automatizaciones segun tu negocio.',
+  'Revisar oportunidades para hosteleria, clinicas, inmobiliarias, tiendas o servicios.',
+  'Definir el primer paso viable sin llenar la home de informacion repetida.',
 ]
 
 export default function ContactPage() {
@@ -14,7 +15,7 @@ export default function ContactPage() {
       <PageIntro
         eyebrow="Contacto"
         title="Solicita un diagnostico digital gratuito"
-        description="Cuentanos que procesos, herramientas o tareas frenan a tu empresa y revisaremos oportunidades reales de automatizacion, IA y software."
+        description="Cuentanos que necesitas: pagina web, carta QR, reservas, automatizacion de horarios, chatbot, CRM o un sistema interno mas claro."
         kicker="Diagnostico BASA"
       />
       <section className="page-section">
@@ -29,7 +30,7 @@ export default function ContactPage() {
             </ul>
             <div className="contact-layout__badge">
               <span>Respuesta inicial</span>
-              <strong>Enfocada a procesos y automatizacion</strong>
+              <strong>Enfocada a una solucion concreta</strong>
             </div>
           </Reveal>
           <Reveal className="contact-layout__form-wrap" delay={0.08}>

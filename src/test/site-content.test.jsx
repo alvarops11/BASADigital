@@ -10,16 +10,15 @@ test('la home muestra el nuevo hero tecnologico y contacto mantiene el formulari
   )
 
   expect(await screen.findByRole('heading', { level: 1 })).toHaveTextContent(
-    /tecnologia\s*que\s*impulsa\s*tu\s*negocio/i,
+    /soluciones\s*digitales\s*para\s*comercios\s*que\s*necesitan\s*moverse\s*mas\s*rapido/i,
   )
-  expect(screen.getByText(/automatizacion, ia y software b2b/i)).toBeInTheDocument()
-  expect(screen.getByText(/basa automation os/i)).toBeInTheDocument()
-  expect(screen.getAllByRole('link', { name: /solicitar diagnostico/i }).length).toBeGreaterThanOrEqual(1)
+  expect(screen.getByText(/panel de control comercial/i)).toBeInTheDocument()
+  expect(screen.getByText(/proceso conectado/i)).toBeInTheDocument()
+  expect(screen.getAllByRole('link', { name: /solicitar presupuesto/i }).length).toBeGreaterThanOrEqual(1)
   expect(screen.getAllByRole('link', { name: /ver soluciones/i }).length).toBeGreaterThanOrEqual(1)
-  expect(screen.getByRole('heading', { name: /tu empresa pierde tiempo en tareas manuales/i })).toBeInTheDocument()
-  expect(screen.getByRole('heading', { name: /tecnologia aplicada a problemas de negocio/i })).toBeInTheDocument()
-  expect(screen.getByText(/openai/i)).toBeInTheDocument()
-  expect(screen.getByRole('heading', { name: /asi funciona una automatizacion basa/i })).toBeInTheDocument()
+  expect(screen.getAllByText(/cartas qr/i).length).toBeGreaterThanOrEqual(1)
+  expect(screen.getByRole('heading', { name: /una presencia digital pensada para captar, explicar y convertir/i })).toBeInTheDocument()
+  expect(screen.getByRole('heading', { name: /modulos concretos para problemas comerciales concretos/i })).toBeInTheDocument()
 
   home.unmount()
 
@@ -43,7 +42,7 @@ test('la home muestra el nuevo hero tecnologico y contacto mantiene el formulari
 
   expect(
     await screen.findByRole('heading', {
-      name: /experiencias visuales para vender soluciones digitales con mas presencia/i,
+      name: /soluciones digitales para comercios que quieren captar y operar mejor/i,
     }),
   ).toBeInTheDocument()
   expect(
@@ -51,6 +50,7 @@ test('la home muestra el nuevo hero tecnologico y contacto mantiene el formulari
       name: /un chatbot con ia que responde a tus clientes por ti/i,
     }),
   ).toBeInTheDocument()
+  expect(screen.getByRole('heading', { name: /webs, reservas, cartas qr y automatizaciones en un solo sitio/i })).toBeInTheDocument()
   expect(screen.getAllByRole('link', { name: /consultar solucion/i }).length).toBeGreaterThanOrEqual(2)
   const splineScenes = await screen.findAllByTestId('mock-spline-scene')
   expect(

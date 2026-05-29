@@ -59,7 +59,7 @@ export default function Header() {
             </NavLink>
           ))}
           <Link className="button button--primary site-nav__cta" to="/contacto" onClick={closeMenu}>
-            Diagnostico gratis
+            Presupuesto
           </Link>
         </div>
       </nav>
