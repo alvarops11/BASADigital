@@ -11,10 +11,10 @@ function buildHtml(payload) {
     <h2>Nuevo contacto desde BASA Digital</h2>
     <p><strong>Nombre:</strong> ${payload.name}</p>
     <p><strong>Email:</strong> ${payload.email}</p>
-    <p><strong>Telefono:</strong> ${payload.phone}</p>
-    <p><strong>Tipo de comercio:</strong> ${payload.businessType}</p>
+    <p><strong>Telefono:</strong> ${payload.phone || 'No indicado'}</p>
+    <p><strong>Empresa:</strong> ${payload.businessType}</p>
     <p><strong>Servicio de interes:</strong> ${payload.interest}</p>
-    <p><strong>Mensaje:</strong></p>
+    <p><strong>Necesidad:</strong></p>
     <p>${payload.message.replace(/\n/g, '<br/>')}</p>
   `.trim()
 }
@@ -38,18 +38,16 @@ export default async function handler(req, res) {
   const payload = {
     name: sanitize(body.name, 120),
     email: sanitize(body.email, 180),
-    phone: sanitize(body.phone, 80),
-    businessType: sanitize(body.businessType, 120),
-    interest: sanitize(body.interest, 200),
-    message: sanitize(body.message, 4000),
+    phone: sanitize(body.phone, 80) || 'No indicado',
+    businessType: sanitize(body.businessType || body.company, 120),
+    interest: sanitize(body.interest, 200) || 'Diagnostico digital gratuito',
+    message: sanitize(body.message || body.need, 4000),
   }
 
   if (
     !payload.name ||
     !payload.email ||
-    !payload.phone ||
     !payload.businessType ||
-    !payload.interest ||
     !payload.message
   ) {
     return res.status(400).json({ error: 'Completa todos los campos obligatorios.' })

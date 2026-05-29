@@ -1,157 +1,155 @@
 import CTASection from '../components/CTASection'
-import DeferredVideo from '../components/DeferredVideo'
 import Hero from '../components/Hero'
 import Marquee from '../components/Marquee'
 import Reveal from '../components/Reveal'
-import ScrollVideo from '../components/ScrollVideo'
 import SectionTitle from '../components/SectionTitle'
-import { solutions } from '../data/solutions'
 
-const benefitPanels = [
+const problems = [
+  'Seguimiento manual de clientes',
+  'Procesos repetitivos',
+  'Uso excesivo de Excel',
+  'Falta de automatizacion',
+  'Informacion dispersa',
+  'Perdida de oportunidades comerciales',
+]
+
+const solutions = [
   {
-    value: '01',
-    title: 'Mas contactos',
-    text: 'Tu comercio aparece mejor, explica mejor y genera una primera impresion mas fuerte.',
+    title: 'Automatizacion de procesos',
+    featured: true,
+    problem: 'Tareas manuales que consumen horas.',
+    solution: 'Flujos entre formularios, CRM, WhatsApp y email.',
+    benefit: 'Menos errores y mas velocidad operativa.',
   },
   {
-    value: '02',
-    title: 'Menos friccion',
-    text: 'Reservas, consultas y solicitudes entran de forma mas clara y ordenada.',
+    title: 'Inteligencia artificial',
+    featured: true,
+    problem: 'Consultas y datos que requieren revision.',
+    solution: 'Agentes IA para clasificar, responder y asistir.',
+    benefit: 'Atencion consistente sin mas carga.',
   },
   {
-    value: '03',
-    title: 'Mas control',
-    text: 'La parte digital deja de depender de improvisaciones y empieza a trabajar con sentido.',
+    title: 'Desarrollo web y software',
+    problem: 'Herramientas genericas que no encajan.',
+    solution: 'Aplicaciones, portales y sistemas internos a medida.',
+    benefit: 'Una base digital preparada para crecer.',
+  },
+  {
+    title: 'Dashboards y analisis de datos',
+    problem: 'Datos repartidos sin vision clara.',
+    solution: 'KPIs, reporting automatico e integraciones.',
+    benefit: 'Control real para decidir mejor.',
+  },
+  {
+    title: 'Cartas QR y pedidos digitales',
+    featured: true,
+    problem: 'Cartas desactualizadas y cambios lentos.',
+    solution: 'Cartas QR editables, alergenos y pedidos.',
+    benefit: 'Mas agilidad para cliente y negocio.',
+  },
+  {
+    title: 'Reservas y agendas online',
+    featured: true,
+    problem: 'Reservas por llamadas y mensajes sueltos.',
+    solution: 'Agenda online con WhatsApp y calendario.',
+    benefit: 'Menos interrupciones y mas reservas cerradas.',
+  },
+  {
+    title: 'Automatizacion para hosteleria',
+    problem: 'Horarios, avisos y turnos manuales.',
+    solution: 'Automatizaciones para cambios, avisos y formularios.',
+    benefit: 'Equipos mas coordinados cada dia.',
+  },
+  {
+    title: 'Creacion de paginas web',
+    problem: 'Webs antiguas que no convierten.',
+    solution: 'Paginas modernas para leads, reservas o solicitudes.',
+    benefit: 'Mas confianza y mejor captacion.',
   },
 ]
 
-const commerceTypes = [
-  'Bares',
+const technologies = [
+  'OpenAI',
+  'n8n',
+  'Supabase',
+  'PostgreSQL',
+  'Next.js',
+  'Stripe',
+  'WhatsApp Business',
+  'Google Workspace',
+  'Airtable',
+  'Notion',
+]
+
+const process = [
+  ['01', 'Diagnostico', 'Analizamos procesos, herramientas, cuellos de botella y oportunidades de automatizacion.'],
+  ['02', 'Estrategia', 'Priorizamos soluciones con impacto real en captacion, gestion o productividad.'],
+  ['03', 'Diseno', 'Definimos arquitectura, experiencia, datos, integraciones y puntos de control.'],
+  ['04', 'Implementacion', 'Construimos, conectamos y probamos el sistema con tu operativa real.'],
+  ['05', 'Optimizacion', 'Medimos uso, ajustamos automatizaciones y preparamos nuevas mejoras.'],
+]
+
+const demoSteps = [
+  'Lead entra',
+  'IA analiza',
+  'CRM registra',
+  'WhatsApp responde',
+  'Dashboard actualiza',
+]
+
+const sectorMarquee = [
   'Restaurantes',
-  'Tiendas',
-  'Peluquerias',
   'Clinicas',
-  'Academias',
   'Inmobiliarias',
+  'Bares',
+  'Hoteles',
+  'Asesorias',
+  'Ecommerce',
   'Gimnasios',
-  'Estudios',
-  'Consultorias',
+  'Academias',
+  'Tiendas',
 ]
 
-const processSteps = [
-  {
-    label: 'Analizamos tu comercio',
-    detail: 'Detectamos que frena la captacion, la respuesta o la imagen del negocio.',
-    icon: (
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-        <circle cx="11" cy="11" r="8" />
-        <line x1="21" y1="21" x2="16.65" y2="16.65" />
-      </svg>
-    ),
-  },
-  {
-    label: 'Disenamos la solucion',
-    detail: 'Proponemos una respuesta concreta, sin tecnologia gratuita ni inflada.',
-    icon: (
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z" />
-      </svg>
-    ),
-  },
-  {
-    label: 'La lanzamos',
-    detail: 'Montamos una presencia digital clara, funcional y preparada para usar.',
-    icon: (
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
-      </svg>
-    ),
-  },
-  {
-    label: 'La mejoramos',
-    detail: 'Ajustamos el sistema segun uso, conversion y necesidades reales.',
-    icon: (
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-        <line x1="18" y1="20" x2="18" y2="10" />
-        <line x1="12" y1="20" x2="12" y2="4" />
-        <line x1="6" y1="20" x2="6" y2="14" />
-      </svg>
-    ),
-  },
+const serviceMarquee = [
+  'Cartas QR',
+  'Reservas online',
+  'Automatizacion de horarios',
+  'Paginas web',
+  'WhatsApp Business',
+  'CRM de leads',
+  'Recordatorios automaticos',
+  'Dashboards',
+  'Agentes IA',
+  'Pedidos digitales',
+]
+
+const buildItems = [
+  'Automatizaciones',
+  'Agentes IA',
+  'Dashboards',
+  'Sistemas internos',
+  'Integraciones',
 ]
 
 export default function HomePage() {
   return (
     <>
       <Hero />
-      <ScrollVideo />
 
       <section className="page-section">
-        <div className="container home-command-grid">
-          <Reveal className="home-command-grid__copy" variant="fade-right">
-            <SectionTitle
-              eyebrow="Beneficios para comercios"
-              title="Una presencia digital pensada para captar, explicar y convertir"
-              description="La web no debe ser un escaparate decorativo. Debe ordenar el mensaje, mejorar la percepcion y facilitar la accion correcta."
-              tone="bright"
-            />
-          </Reveal>
-          <div className="home-command-grid__panels">
-            {benefitPanels.map((panel, index) => (
-              <Reveal key={panel.title} className="command-panel" delay={index * 0.08} variant="scale-in">
-                <span>{panel.value}</span>
-                <h3>{panel.title}</h3>
-                <p>{panel.text}</p>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="page-section page-section--matrix">
-        <div className="container commerce-matrix">
+        <div className="container problem-section">
           <Reveal variant="blur-in">
             <SectionTitle
-              eyebrow="Tipos de comercio"
-              title="El sistema se adapta al contexto del negocio, no al reves"
-              description="BASA Digital aterriza lo tecnologico a sectores que necesitan resultados visibles y procesos mas limpios."
+              eyebrow="Problemas operativos"
+              title="Tu empresa pierde tiempo en tareas manuales?"
+              description="Cuando los procesos dependen de copiar, pegar, perseguir respuestas y revisar hojas de calculo, el crecimiento se vuelve mas lento y menos controlable."
             />
           </Reveal>
-        </div>
-
-        <div className="commerce-matrix__marquee-wrap">
-          <Marquee items={commerceTypes} />
-          <Marquee items={commerceTypes} reverse />
-        </div>
-
-        <div className="container">
-          <Reveal className="commerce-matrix__media" delay={0.12} variant="scale-in">
-            <DeferredVideo
-              className="commerce-matrix__video"
-              poster="/BASA DIGITAL/foto fondo.jpg"
-              src="/BASA DIGITAL/video promocionaÃ±.mp4"
-            />
-            <div className="commerce-matrix__media-overlay" aria-hidden="true" />
-          </Reveal>
-        </div>
-      </section>
-
-      <section className="page-section">
-        <div className="container process-ribbon">
-          <Reveal variant="fade-up">
-            <SectionTitle
-              eyebrow="Metodo"
-              title="De la situacion actual a una operativa digital mas clara"
-              description="Cada fase conecta con la siguiente para que la solucion tenga continuidad y no quede en una accion aislada."
-            />
-          </Reveal>
-          <div className="process-ribbon__grid">
-            {processSteps.map((step, index) => (
-              <Reveal key={step.label} className="process-node" delay={index * 0.1} variant="fade-up">
-                <span className="process-node__icon">{step.icon}</span>
-                <span className="process-node__number">{String(index + 1).padStart(2, '0')}</span>
-                <h3>{step.label}</h3>
-                <p>{step.detail}</p>
+          <div className="problem-grid">
+            {problems.map((problem, index) => (
+              <Reveal className="problem-card" key={problem} delay={index * 0.05} variant="scale-in">
+                <span>{String(index + 1).padStart(2, '0')}</span>
+                <h3>{problem}</h3>
               </Reveal>
             ))}
           </div>
@@ -159,23 +157,136 @@ export default function HomePage() {
       </section>
 
       <section className="page-section page-section--alt">
-        <div className="container featured-solutions">
-          <Reveal variant="blur-in">
+        <div className="container business-solutions">
+          <Reveal variant="fade-up">
             <SectionTitle
-              eyebrow="Soluciones destacadas"
-              title="Modulos concretos para problemas comerciales concretos"
-              description="Una seleccion inicial de servicios utiles para comercios que quieren avanzar sin montar una estructura innecesaria."
+              eyebrow="Soluciones BASA"
+              title="Tecnologia aplicada a problemas de negocio"
+              description="No vendemos servicios sueltos. Disenamos sistemas que conectan procesos, datos y equipos para mejorar resultados concretos."
               tone="bright"
             />
           </Reveal>
-          <div className="featured-solutions__grid">
-            {solutions.slice(0, 4).map((solution, index) => (
-              <Reveal key={solution.title} delay={index * 0.08} variant="scale-in">
-                <article className={`featured-solution featured-solution--${solution.accent}`}>
-                  <p>{solution.eyebrow}</p>
-                  <h3>{solution.title}</h3>
-                  <span>{solution.metric}</span>
-                </article>
+          <div className="business-solutions__grid">
+            {solutions.map((solution, index) => (
+              <Reveal
+                className={`business-solution${solution.featured ? ' business-solution--featured' : ''}`}
+                key={solution.title}
+                delay={index * 0.08}
+                variant="fade-up"
+              >
+                <span className="business-solution__index">{String(index + 1).padStart(2, '0')}</span>
+                {solution.featured ? <span className="business-solution__badge">Alta demanda</span> : null}
+                <h3>{solution.title}</h3>
+                <dl>
+                  <div>
+                    <dt>Problema</dt>
+                    <dd>{solution.problem}</dd>
+                  </div>
+                  <div>
+                    <dt>Solucion</dt>
+                    <dd>{solution.solution}</dd>
+                  </div>
+                  <div>
+                    <dt>Beneficio</dt>
+                    <dd>{solution.benefit}</dd>
+                  </div>
+                </dl>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="page-section">
+        <div className="container tech-section">
+          <Reveal variant="blur-in">
+            <SectionTitle
+              eyebrow="Stack tecnologico"
+              title="Herramientas modernas conectadas a tu operativa"
+              description="Seleccionamos tecnologia fiable, escalable y mantenible segun el contexto de cada proyecto."
+            />
+          </Reveal>
+          <div className="tech-cloud">
+            {technologies.map((technology, index) => (
+              <Reveal className="tech-badge" key={technology} delay={index * 0.035} variant="scale-in">
+                {technology}
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="page-section page-section--matrix">
+        <div className="container process-section">
+          <Reveal variant="fade-up">
+            <SectionTitle
+              eyebrow="Metodologia BASA"
+              title="Del diagnostico a la optimizacion continua"
+              description="Trabajamos con una secuencia clara para que la tecnologia no sea decorativa: debe integrarse, medirse y mejorar."
+            />
+          </Reveal>
+          <div className="basa-timeline">
+            {process.map(([number, title, text], index) => (
+              <Reveal className="basa-timeline__item" key={title} delay={index * 0.06} variant="fade-up">
+                <span>{number}</span>
+                <h3>{title}</h3>
+                <p>{text}</p>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="page-section">
+        <div className="container automation-demo">
+          <Reveal className="automation-demo__copy" variant="fade-right">
+            <SectionTitle
+              eyebrow="Demo visual"
+              title="Asi funciona una automatizacion BASA"
+              description="Un flujo sencillo puede convertir una entrada comercial en respuesta, registro y control sin depender de tareas repetitivas."
+            />
+          </Reveal>
+          <Reveal className="automation-demo__visual" variant="scale-in" delay={0.1}>
+            {demoSteps.map((step, index) => (
+              <div className="demo-step" key={step}>
+                <span>{String(index + 1).padStart(2, '0')}</span>
+                <strong>{step}</strong>
+              </div>
+            ))}
+          </Reveal>
+        </div>
+      </section>
+
+      <section className="page-section page-section--alt sector-marquee-section">
+        <div className="container use-cases">
+          <Reveal variant="blur-in">
+            <SectionTitle
+              eyebrow="Sectores y soluciones"
+              title="De restaurantes a clinicas: sistemas digitales que se mueven con tu negocio"
+              description="Recuperamos lo concreto: cartas QR, reservas, webs, automatizaciones, CRM y flujos de WhatsApp adaptados al tipo de empresa."
+              tone="bright"
+            />
+          </Reveal>
+          <div className="sector-marquee">
+            <Marquee items={sectorMarquee} />
+            <Marquee items={serviceMarquee} reverse />
+          </div>
+        </div>
+      </section>
+
+      <section className="page-section">
+        <div className="container authority-section">
+          <Reveal className="authority-section__copy" variant="fade-right">
+            <SectionTitle
+              eyebrow="Capacidad tecnica"
+              title="Lo que podemos construir para tu empresa"
+              description="Sistemas reales para ordenar captacion, operaciones, datos y comunicacion interna con una base tecnica profesional."
+            />
+          </Reveal>
+          <div className="build-grid">
+            {buildItems.map((item, index) => (
+              <Reveal className="build-card" key={item} delay={index * 0.06} variant="scale-in">
+                <span>{item}</span>
               </Reveal>
             ))}
           </div>

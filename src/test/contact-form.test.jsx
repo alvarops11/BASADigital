@@ -12,24 +12,20 @@ test('muestra errores requeridos y confirma envio correcto', async () => {
 
   render(<ContactForm />)
 
-  await user.click(screen.getByRole('button', { name: /enviar/i }))
+  await user.click(screen.getByRole('button', { name: /solicitar diagnostico/i }))
 
   expect(screen.getByText(/introduce tu nombre/i)).toBeInTheDocument()
+  expect(screen.getByText(/indica el nombre de la empresa/i)).toBeInTheDocument()
   expect(screen.getByText(/indica un email valido/i)).toBeInTheDocument()
 
-  await user.type(screen.getByLabelText(/nombre/i), 'Ana')
-  await user.type(screen.getByLabelText(/^email/i), 'ana@basa.es')
-  await user.type(screen.getByLabelText(/telefono/i), '600123123')
-  await user.selectOptions(screen.getByLabelText(/tipo de comercio/i), 'Restaurante')
-  await user.selectOptions(
-    screen.getByLabelText(/servicio que le interesa/i),
-    'Carta digital con QR',
-  )
+  await user.type(screen.getByRole('textbox', { name: /^nombre/i }), 'Ana')
+  await user.type(screen.getByRole('textbox', { name: /^empresa/i }), 'BASA Test')
+  await user.type(screen.getByRole('textbox', { name: /^email/i }), 'ana@basa.es')
   await user.type(
-    screen.getByLabelText(/mensaje/i),
-    'Necesito renovar la presencia digital del local',
+    screen.getByLabelText(/necesidad/i),
+    'Necesito automatizar el seguimiento comercial',
   )
-  await user.click(screen.getByRole('button', { name: /enviar/i }))
+  await user.click(screen.getByRole('button', { name: /solicitar diagnostico/i }))
 
   expect(await screen.findByText(/hemos recibido tu solicitud/i)).toBeInTheDocument()
   expect(fetchSpy).toHaveBeenCalledWith(

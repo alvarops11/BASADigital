@@ -10,18 +10,16 @@ test('la home muestra el nuevo hero tecnologico y contacto mantiene el formulari
   )
 
   expect(await screen.findByRole('heading', { level: 1 })).toHaveTextContent(
-    /soluciones\s*digitales\s*para\s*comercios\s*que\s*necesitan\s*moverse\s*mas\s*rapido/i,
+    /tecnologia\s*que\s*impulsa\s*tu\s*negocio/i,
   )
-  expect(screen.getByText(/panel de control comercial/i)).toBeInTheDocument()
-  expect(screen.getByText(/proceso conectado/i)).toBeInTheDocument()
-  expect(screen.getAllByRole('link', { name: /solicitar presupuesto/i }).length).toBeGreaterThanOrEqual(1)
+  expect(screen.getByText(/automatizacion, ia y software b2b/i)).toBeInTheDocument()
+  expect(screen.getByText(/basa automation os/i)).toBeInTheDocument()
+  expect(screen.getAllByRole('link', { name: /solicitar diagnostico/i }).length).toBeGreaterThanOrEqual(1)
   expect(screen.getAllByRole('link', { name: /ver soluciones/i }).length).toBeGreaterThanOrEqual(1)
-  expect(screen.getByText(/experiencia digital/i)).toBeInTheDocument()
-  expect(screen.getByRole('heading', { name: /la imagen del negocio tambien tiene que sentirse actual, precisa y memorable/i })).toBeInTheDocument()
-  expect(await screen.findByTestId('mock-spline-scene')).toHaveAttribute(
-    'data-scene',
-    'https://prod.spline.design/pr1ylEisLMMRAwfI/scene.splinecode',
-  )
+  expect(screen.getByRole('heading', { name: /tu empresa pierde tiempo en tareas manuales/i })).toBeInTheDocument()
+  expect(screen.getByRole('heading', { name: /tecnologia aplicada a problemas de negocio/i })).toBeInTheDocument()
+  expect(screen.getByText(/openai/i)).toBeInTheDocument()
+  expect(screen.getByRole('heading', { name: /asi funciona una automatizacion basa/i })).toBeInTheDocument()
 
   home.unmount()
 
@@ -31,9 +29,9 @@ test('la home muestra el nuevo hero tecnologico y contacto mantiene el formulari
     </MemoryRouter>,
   )
 
-  expect(await screen.findByRole('heading', { name: /un sistema visual hecho para vender mejor/i })).toBeInTheDocument()
+  expect(await screen.findByRole('heading', { name: /solicita un diagnostico digital gratuito/i })).toBeInTheDocument()
   expect(screen.getByLabelText(/nombre/i)).toBeInTheDocument()
-  expect(screen.getByRole('button', { name: /enviar solicitud/i })).toBeInTheDocument()
+  expect(screen.getByRole('button', { name: /solicitar diagnostico/i })).toBeInTheDocument()
 
   contact.unmount()
 

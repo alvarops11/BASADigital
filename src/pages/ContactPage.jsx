@@ -3,9 +3,9 @@ import PageIntro from '../components/PageIntro'
 import Reveal from '../components/Reveal'
 
 const reasons = [
-  'Detectar donde se esta perdiendo conversion o claridad.',
-  'Definir una solucion razonable para el tipo de comercio.',
-  'Ordenar reservas, formularios, captacion o imagen digital.',
+  'Detectar procesos manuales que se pueden automatizar.',
+  'Priorizar soluciones de IA, software o datos con impacto real.',
+  'Definir un primer sistema viable para mejorar gestion y productividad.',
 ]
 
 export default function ContactPage() {
@@ -13,15 +13,15 @@ export default function ContactPage() {
     <>
       <PageIntro
         eyebrow="Contacto"
-        title="Un sistema visual hecho para vender mejor"
-        description="Si ya sabes lo que necesitas o solo detectas que la presencia digital del negocio no acompana, cuentanos el contexto y planteamos el siguiente paso."
-        kicker="Arranque del proyecto"
+        title="Solicita un diagnostico digital gratuito"
+        description="Cuentanos que procesos, herramientas o tareas frenan a tu empresa y revisaremos oportunidades reales de automatizacion, IA y software."
+        kicker="Diagnostico BASA"
       />
       <section className="page-section">
         <div className="container contact-layout">
           <Reveal className="contact-layout__aside">
             <p className="section-title__eyebrow">Punto de entrada</p>
-            <h2>Que puedes plantearnos</h2>
+            <h2>Que revisamos contigo</h2>
             <ul>
               {reasons.map((item) => (
                 <li key={item}>{item}</li>
@@ -29,7 +29,7 @@ export default function ContactPage() {
             </ul>
             <div className="contact-layout__badge">
               <span>Respuesta inicial</span>
-              <strong>Enfocada al negocio</strong>
+              <strong>Enfocada a procesos y automatizacion</strong>
             </div>
           </Reveal>
           <Reveal className="contact-layout__form-wrap" delay={0.08}>

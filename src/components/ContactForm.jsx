@@ -2,53 +2,25 @@ import { useEffect, useState } from 'react'
 
 const initialForm = {
   name: '',
+  company: '',
   email: '',
-  phone: '',
-  businessType: '',
-  interest: '',
-  message: '',
+  need: '',
 }
-
-const businessOptions = [
-  'Bar',
-  'Restaurante',
-  'Tienda',
-  'Peluqueria',
-  'Clinica',
-  'Academia',
-  'Inmobiliaria',
-  'Gimnasio',
-  'Otro',
-]
-
-const interestOptions = [
-  'Web profesional para restaurante',
-  'Carta digital con QR',
-  'Sistema de reservas online',
-  'Landing page para campana local',
-  'Chatbot para atencion al cliente',
-  'Automatizacion de formularios y leads',
-  'Catalogo digital para tienda',
-  'Web inmobiliaria con captacion de propietarios',
-  'Sistema de pedidos o solicitudes online',
-]
 
 function validate(values) {
   const errors = {}
 
   if (!values.name.trim()) errors.name = 'Introduce tu nombre'
+  if (!values.company.trim()) errors.company = 'Indica el nombre de la empresa'
   if (!values.email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email)) {
     errors.email = 'Indica un email valido'
   }
-  if (!values.phone.trim()) errors.phone = 'Indica un telefono de contacto'
-  if (!values.businessType) errors.businessType = 'Selecciona el tipo de comercio'
-  if (!values.interest) errors.interest = 'Selecciona el servicio que te interesa'
-  if (!values.message.trim()) errors.message = 'Cuentanos brevemente lo que necesitas'
+  if (!values.need.trim()) errors.need = 'Cuentanos brevemente la necesidad'
 
   return errors
 }
 
-export default function ContactForm() {
+export default function ContactForm({ compact = false }) {
   const [values, setValues] = useState(initialForm)
   const [errors, setErrors] = useState({})
   const [status, setStatus] = useState('idle')
@@ -93,7 +65,13 @@ export default function ContactForm() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(values),
+        body: JSON.stringify({
+          ...values,
+          phone: 'No indicado',
+          businessType: values.company,
+          interest: 'Diagnostico digital gratuito',
+          message: values.need,
+        }),
       })
 
       const data = await response.json()
@@ -110,7 +88,7 @@ export default function ContactForm() {
   }
 
   return (
-    <form className="contact-form" onSubmit={handleSubmit} noValidate>
+    <form className={`contact-form${compact ? ' contact-form--compact' : ''}`} onSubmit={handleSubmit} noValidate>
       <div className="contact-form__grid">
         <label>
           <span>Nombre</span>
@@ -118,51 +96,27 @@ export default function ContactForm() {
           {errors.name ? <small>{errors.name}</small> : null}
         </label>
         <label>
+          <span>Empresa</span>
+          <input name="company" value={values.company} onChange={handleChange} />
+          {errors.company ? <small>{errors.company}</small> : null}
+        </label>
+        <label>
           <span>Email</span>
           <input name="email" type="email" value={values.email} onChange={handleChange} />
           {errors.email ? <small>{errors.email}</small> : null}
         </label>
-        <label>
-          <span>Telefono</span>
-          <input name="phone" type="tel" value={values.phone} onChange={handleChange} />
-          {errors.phone ? <small>{errors.phone}</small> : null}
-        </label>
-        <label>
-          <span>Tipo de comercio</span>
-          <select name="businessType" value={values.businessType} onChange={handleChange}>
-            <option value="">Selecciona una opcion</option>
-            {businessOptions.map((option) => (
-              <option key={option} value={option}>
-                {option}
-              </option>
-            ))}
-          </select>
-          {errors.businessType ? <small>{errors.businessType}</small> : null}
-        </label>
-        <label>
-          <span>Servicio que le interesa</span>
-          <select name="interest" value={values.interest} onChange={handleChange}>
-            <option value="">Selecciona una opcion</option>
-            {interestOptions.map((option) => (
-              <option key={option} value={option}>
-                {option}
-              </option>
-            ))}
-          </select>
-          {errors.interest ? <small>{errors.interest}</small> : null}
-        </label>
         <label className="contact-form__full">
-          <span>Mensaje</span>
-          <textarea name="message" rows="5" value={values.message} onChange={handleChange} />
-          {errors.message ? <small>{errors.message}</small> : null}
+          <span>Necesidad</span>
+          <textarea name="need" rows="5" value={values.need} onChange={handleChange} />
+          {errors.need ? <small>{errors.need}</small> : null}
         </label>
       </div>
 
       <div className="contact-form__footer">
-        <button className="button button--primary" type="submit" disabled={status === 'sending'}>
-          {status === 'sending' ? 'Enviando...' : 'Enviar solicitud'}
+        <button className="button button--primary button--glow" type="submit" disabled={status === 'sending'}>
+          {status === 'sending' ? 'Enviando...' : 'Solicitar diagnostico'}
         </button>
-        <p className="contact-form__note">Te responderemos por correo o telefono tras revisar tu caso.</p>
+        <p className="contact-form__note">Te responderemos por email tras revisar el contexto.</p>
       </div>
 
       {status === 'success' ? (
